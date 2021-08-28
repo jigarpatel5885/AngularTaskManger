@@ -6,11 +6,13 @@ import { AppComponent } from './app.component';
 import { AdminModule } from './admin/admin.module';
 
 import {  HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './login/login.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
-  declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule,AdminModule],
+  declarations: [AppComponent, LoginComponent],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule,AdminModule,FormsModule],
   providers: [],
   bootstrap: [AppComponent],
 })

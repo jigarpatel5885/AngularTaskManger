@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { DashboardService } from './dashboard.service';
+import { LoginService } from './login.service';
 
 @Component({
   selector: 'app-root',
@@ -9,4 +10,14 @@ import { DashboardService } from './dashboard.service';
 
 
 
-export class AppComponent {}
+export class AppComponent {
+
+/**
+ *
+ */
+constructor(public loginService:LoginService) {
+  
+
+}
+
+}
