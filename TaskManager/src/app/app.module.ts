@@ -9,6 +9,7 @@ import {  HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { FormsModule } from '@angular/forms';
 import { JwtInterceptorService } from './jwt-interceptor.service';
+import { JwtUnuthorizedInterceptorService } from './jwt-unuthorized-interceptor.service';
 
 
 @NgModule({
@@ -18,6 +19,11 @@ import { JwtInterceptorService } from './jwt-interceptor.service';
     {
       provide:HTTP_INTERCEPTORS,
       useClass:JwtInterceptorService,
+      multi:true
+    },
+    {
+      provide:HTTP_INTERCEPTORS,
+      useClass:JwtUnuthorizedInterceptorService,
       multi:true
     }
   ],

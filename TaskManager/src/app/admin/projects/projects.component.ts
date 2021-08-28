@@ -103,7 +103,7 @@ export class ProjectsComponent implements OnInit {
   }
 
   onSearchClick(){
-    console.log(this.searchBy + '-' +this.searchText);
+   
     this.projectsService.searchProject(this.searchBy,this.searchText).subscribe((response:Project[])=>{
      
       this.projects = response;
