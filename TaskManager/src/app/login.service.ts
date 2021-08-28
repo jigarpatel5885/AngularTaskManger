@@ -1,4 +1,4 @@
-import { HttpClient, } from '@angular/common/http';
+import { HttpBackend, HttpClient, } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LoginViewModel } from './login-view-model';
@@ -10,15 +10,21 @@ import { map } from 'rxjs/operators';
 })
 export class LoginService {
 currentUserName:string = null;
-  constructor(private httpClient:HttpClient) { 
+private httpClient : HttpClient=null;
+  constructor(private httpBackend:HttpBackend) { 
 
   }
 
   public Login(loginViewModal:LoginViewModel) :Observable<any>{
-    return this.httpClient.post<any>("/authenticate",loginViewModal,{responseType:"json"})
+
+    this.httpClient = new HttpClient(this.httpBackend);
+    console.log("requestLogin");
+    return this.httpClient.post<any>("http://localhost:54573/authenticate",loginViewModal,{responseType:"json"})
     .pipe(map(user =>{
       if(user){
-        this.currentUserName = user.UserName;
+        this.currentUserName = user.userName;
+        console.log(user.userName);
+        sessionStorage.currentUser = JSON.stringify(user);
       }
       return user;
     }));
@@ -26,6 +32,7 @@ currentUserName:string = null;
 
   public Logout(){
     this.currentUserName = null;
+    sessionStorage.removeItem("currentUser");
   }
 
 
