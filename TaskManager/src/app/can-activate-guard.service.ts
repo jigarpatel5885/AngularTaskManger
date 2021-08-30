@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { LoginService } from './login.service';
 
 @Injectable({
@@ -7,13 +8,13 @@ import { LoginService } from './login.service';
 })
 export class CanActivateGuardService implements CanActivate{
 
-  constructor(private loginService:LoginService,private router :Router) { 
+  constructor(private loginService:LoginService,private router :Router,private jwtHelperService:JwtHelperService) { 
 
   }
 
-  canActivate() :boolean{
-
-    if(this.loginService.IsAuthenticated()){
+  canActivate(route: ActivatedRouteSnapshot) :boolean{
+    var token = (sessionStorage.getItem("currentUser")?JSON.parse(sessionStorage.getItem("currentUser")).token :null);
+    if(this.loginService.IsAuthenticated() && this.jwtHelperService.decodeToken(token).role == route.data.expectedRole){
       return true;
     }
     else{
